@@ -1,3 +1,3 @@
 'use strict';
 var Backbone = require('../backbone_jquery');
-module.exports = Backbone.model.extend({});
+module.exports = Backbone.Model.extend({});

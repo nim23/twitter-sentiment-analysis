@@ -50,8 +50,8 @@ webpackJsonp([1],{
 
 	module.exports = React.createClass({displayName: 'exports',
 	  renderTwits: function(){
-	    return this.props.twits.map(function(twit){
-	      return Twit({twit: twit})
+	    return this.props.twits.map(function(model, index){
+	      return Twit({key: index, twit: model.toJSON() || model})
 	    })
 	  },
 	  render: function(){

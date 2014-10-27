@@ -5,8 +5,8 @@ var Twit = require('./twit');
 
 module.exports = React.createClass({
   renderTwits: function(){
-    return this.props.twits.map(function(twit){
-      return <Twit twit={twit}/>
+    return this.props.twits.map(function(model, index){
+      return <Twit key={index} twit={model.toJSON() || model}/>
     })
   },
   render: function(){

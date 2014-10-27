@@ -109,7 +109,7 @@
 	var React = __webpack_require__(6);
 	var $ = __webpack_require__(7);
 	var hijackUrls = __webpack_require__(3);
-	var twits = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./collections/twits/\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var Twits = __webpack_require__(157);
 
 	var Router = Backbone.Router.extend({
 	    routes: {
@@ -118,8 +118,9 @@
 	    },
 	    default: function(){
 	      __webpack_require__.e/*nsure*/(1, function(){
+	        var twits = new Twits($('#content').data('state'));
 	        var twitApp = __webpack_require__(156);
-	        //React.renderComponent(<twitApp/>, $('#content')[0]);
+	        React.renderComponent(twitApp({twits: twits}), $('#content')[0]);
 	      });
 	    },
 	    about: function(){
@@ -31588,6 +31589,29 @@
 	module.exports = toArray;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
+
+/***/ },
+/* 155 */,
+/* 156 */,
+/* 157 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var Backbone = __webpack_require__(2);
+	var Twit = __webpack_require__(158);
+	module.exports = Backbone.Collection.extend({
+	  model: Twit
+	});
+
+
+/***/ },
+/* 158 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var Backbone = __webpack_require__(2);
+	module.exports = Backbone.Model.extend({});
+
 
 /***/ }
 /******/ ])
