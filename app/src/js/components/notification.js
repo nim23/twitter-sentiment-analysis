@@ -16,16 +16,16 @@ module.exports = React.createClass({
     var notification = this.props.model ? this.props.model.toJSON() : undefined;
 
     if(notification && notification.count > 0){
-      return <span>
+      return <div className='notification'>
                 {this.getNotificationText(notification)}
                 <a href='javascript:;' onClick={this.onClick}>{'Show Tweets'}</a>
-             </span>;
+             </div>;
     }else{
       return '';
     }
   },
   render: function(){
-    return (<div className='notification'>
+    return (<div>
               {this.renderNotification()}
             </div>);
   }

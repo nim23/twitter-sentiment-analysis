@@ -101,7 +101,7 @@ webpackJsonp([1],[
 	    var notification = this.props.model ? this.props.model.toJSON() : undefined;
 
 	    if(notification && notification.count > 0){
-	      return React.DOM.span(null, 
+	      return React.DOM.div({className: "notification"}, 
 	                this.getNotificationText(notification), 
 	                React.DOM.a({href: "javascript:;", onClick: this.onClick}, 'Show Tweets')
 	             );
@@ -110,7 +110,7 @@ webpackJsonp([1],[
 	    }
 	  },
 	  render: function(){
-	    return (React.DOM.div({className: "notification"}, 
+	    return (React.DOM.div(null, 
 	              this.renderNotification()
 	            ));
 	  }
