@@ -2,6 +2,7 @@
 'use strict';
 var React = require('react');
 var Twit = require('./twit');
+var notification = require('./notification');
 var BackboneMixin = require('../mixins/backbone_mixin');
 
 module.exports = React.createClass({
@@ -12,7 +13,9 @@ module.exports = React.createClass({
     });
   },
   render: function(){
-    return (<div>
+    return (<div className='twits-app'>
+              <notification model={this.props.notification}
+                            onClick={this.props.showNewTweets}/>
               {this.renderTwits()}
             </div>);
   }

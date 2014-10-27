@@ -11,7 +11,7 @@ function renderPage(req, res){
       var markup = React.renderComponentToString(TwitsAppComp({collection: twits}));
       res.render('index', {content: markup, state: twits});
     }, function(){
-      res.render('index', {content: 'Error loading content'});
+      res.render('index', {content: 'Error loading content!!'});
   });
 }
 
