@@ -47,12 +47,14 @@ webpackJsonp([1],{
 	'use strict';
 	var React = __webpack_require__(6);
 	var Twit = __webpack_require__(8);
+	var BackboneMixin = __webpack_require__(159);
 
 	module.exports = React.createClass({displayName: 'exports',
+	  mixins: [BackboneMixin],
 	  renderTwits: function(){
 	    return this.props.twits.map(function(model, index){
 	      return Twit({key: index, twit: model.toJSON() || model})
-	    })
+	    });
 	  },
 	  render: function(){
 	    return (React.DOM.div(null, 
@@ -60,6 +62,26 @@ webpackJsonp([1],{
 	            ));
 	  }
 	});
+
+
+/***/ },
+
+/***/ 159:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	module.exports = {
+		componentDidMount: function(){
+				this._boundForceUpdate = this.forceUpdate.bind(this, null);
+				this.getBackboneObject().on('all', this._boundForceUpdate, this);
+			},
+		componentWillUnmount: function(){
+				this.getBackboneObject().off('all', this._boundForceUpdate);
+			},
+		getBackboneObject: function(){
+				return this.props.twits || this.props.twit;
+			}
+	};
 
 
 /***/ }

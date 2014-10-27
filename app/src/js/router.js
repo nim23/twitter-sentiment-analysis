@@ -5,6 +5,7 @@ var React = require('react');
 var $ = require('jquery');
 var hijackUrls = require('./hijack_urls');
 var Twits = require('./collections/twits');
+var Twit = require('./models/twit');
 
 var Router = Backbone.Router.extend({
     routes: {
@@ -15,6 +16,10 @@ var Router = Backbone.Router.extend({
       require.ensure([], function(){
         var twits = new Twits($('#content').data('state'));
         var twitApp = require('./components/twitApp.js');
+        var socket = io.connect();
+        socket.on('tweet', function(data){
+          twits.add(new Twit(data));
+        });
         React.renderComponent(<twitApp twits={twits}/>, $('#content')[0]);
       });
     },

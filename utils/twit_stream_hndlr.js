@@ -24,7 +24,7 @@ module.exports = function(stream, io){
        twit.save(function(err){
          if(!err){
            console.log(twit);
-           //io.emit('tweet', tweet);
+           io.emit('tweet', twit);
          }
        });
 

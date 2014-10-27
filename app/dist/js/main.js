@@ -110,6 +110,7 @@
 	var $ = __webpack_require__(7);
 	var hijackUrls = __webpack_require__(3);
 	var Twits = __webpack_require__(157);
+	var Twit = __webpack_require__(158);
 
 	var Router = Backbone.Router.extend({
 	    routes: {
@@ -120,6 +121,10 @@
 	      __webpack_require__.e/*nsure*/(1, function(){
 	        var twits = new Twits($('#content').data('state'));
 	        var twitApp = __webpack_require__(156);
+	        var socket = io.connect();
+	        socket.on('tweet', function(data){
+	          twits.add(new Twit(data));
+	        });
 	        React.renderComponent(twitApp({twits: twits}), $('#content')[0]);
 	      });
 	    },
