@@ -8,6 +8,6 @@ module.exports = {
 			this.getBackboneObject().off('all', this._boundForceUpdate);
 		},
 	getBackboneObject: function(){
-			return this.props.twits || this.props.twit;
+			return this.props.collection || this.props.model;
 		}
 };

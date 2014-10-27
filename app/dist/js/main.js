@@ -109,8 +109,6 @@
 	var React = __webpack_require__(6);
 	var $ = __webpack_require__(7);
 	var hijackUrls = __webpack_require__(3);
-	var Twits = __webpack_require__(157);
-	var Twit = __webpack_require__(158);
 
 	var Router = Backbone.Router.extend({
 	    routes: {
@@ -118,14 +116,9 @@
 	      '*path': 'default'
 	    },
 	    default: function(){
-	      __webpack_require__.e/*nsure*/(1, function(){
-	        var twits = new Twits($('#content').data('state'));
-	        var twitApp = __webpack_require__(156);
-	        var socket = io.connect();
-	        socket.on('tweet', function(data){
-	          twits.add(new Twit(data));
-	        });
-	        React.renderComponent(twitApp({twits: twits}), $('#content')[0]);
+	      __webpack_require__.e/*nsure*/(1/* empty */, function(){
+	        var TwitsAppView = __webpack_require__(160);
+	        new TwitsAppView({el: '#content'});
 	      });
 	    },
 	    about: function(){
@@ -150,9 +143,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var Backbone = __webpack_require__(9),
-		$ = __webpack_require__(7);
-
+	var Backbone = __webpack_require__(9);
+	var $ = __webpack_require__(7);
 	Backbone.$ = $;
 
 	module.exports = Backbone;
@@ -31594,29 +31586,6 @@
 	module.exports = toArray;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
-
-/***/ },
-/* 155 */,
-/* 156 */,
-/* 157 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var Backbone = __webpack_require__(2);
-	var Twit = __webpack_require__(158);
-	module.exports = Backbone.Collection.extend({
-	  model: Twit
-	});
-
-
-/***/ },
-/* 158 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var Backbone = __webpack_require__(2);
-	module.exports = Backbone.Model.extend({});
-
 
 /***/ }
 /******/ ])

@@ -19,12 +19,12 @@ module.exports = function(stream, io){
         user_name: data.user.screen_name
       });
 
-      console.log(twit);
+      // console.log(twit);
 
        twit.save(function(err){
          if(!err){
            console.log(twit);
-           io.emit('tweet', twit);
+           io.emit('twit', twit);
          }
        });
 
