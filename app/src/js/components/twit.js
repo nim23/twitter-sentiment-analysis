@@ -2,15 +2,13 @@
 'use strict';
 var React = require('react');
 var Avatar = require('./avatar');
-var Encoder = require('node-html-encoder').Encoder;
 
 module.exports = React.createClass({
   render: function(){
-    var encoder = new Encoder('entity');
     return (
-        <div className='twit'>
+        <div className={'twit ' + (this.props.twit.sentiment || 'positive')}>
           <Avatar imgUrl={this.props.twit.profile_image_url}/>
-          {encoder.htmlEncode(this.props.twit.text)}
+          <span className='twit-text'>{this.props.twit.text}</span>
         </div>
     );
   }
