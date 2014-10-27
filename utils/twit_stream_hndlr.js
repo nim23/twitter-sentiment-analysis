@@ -1,5 +1,5 @@
 'use strict';
-var Tweet = require('../models/Tweet');
+var Twit = require('../models/Twit');
 var getSentiment = require('./get_sentiment');
 
 module.exports = function(stream, io){
@@ -9,7 +9,7 @@ module.exports = function(stream, io){
 
       var sentimentAnalysis = JSON.parse(resp);
 
-      var tweet = new Tweet({
+      var twit = new Twit({
         id: data.id,
         text: data.text,
         sentiment: sentimentAnalysis.sentiment,
@@ -19,11 +19,11 @@ module.exports = function(stream, io){
         user_name: data.user.screen_name
       });
 
-      //console.log(tweet);
+      console.log(twit);
 
-       tweet.save(function(err){
+       twit.save(function(err){
          if(!err){
-           console.log(tweet);
+           console.log(twit);
            //io.emit('tweet', tweet);
          }
        });
