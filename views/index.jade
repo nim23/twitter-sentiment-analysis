@@ -3,4 +3,7 @@ extends layout
 block content
   #content(data-state=state) !{content}
   script(type='text/javascript', src='https://cdn.socket.io/socket.io-1.1.0.js')
-  script(type='text/javascript', src='/dist/js/main.js' async)
+  if 'production' != process.env.NODE_ENV
+    script(type='text/javascript', src='/dist/js/main.js' async)
+  else
+    script(type='text/javascript', src='/dist/js/main.min.js' async)
