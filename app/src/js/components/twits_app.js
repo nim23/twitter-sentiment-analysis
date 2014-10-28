@@ -3,6 +3,7 @@
 var React = require('react');
 var Twit = require('./twit');
 var notification = require('./notification');
+var navigation = require('./navigation');
 var pageLoader = require('./page_loader');
 var BackboneMixin = require('../mixins/backbone_mixin');
 
@@ -14,11 +15,12 @@ module.exports = React.createClass({
     });
   },
   render: function(){
-    return (<div className='twits-app'>
+    return (<section className='twits-app'>
+              <navigation />
               <notification model={this.props.notification}
                             onClick={this.props.showNewTweets}/>
               {this.renderTwits()}
               <pageLoader onClick={this.props.showPrevTweets}/>
-            </div>);
+            </section>);
   }
 });

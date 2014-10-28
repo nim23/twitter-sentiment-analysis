@@ -10,13 +10,22 @@ var React = require('react');
 
 module.exports = Backbone.View.extend({
   initialize: function(){
-    this.twits = new Twits(this.$el.data('state'));
+    this.initializeTwits();
     this.notification = new Notification({count: 0});
     this.newTwits = [];
     this.initializeSocket();
     this.page = 0;
     this.skip = 0;
     this.render();
+  },
+  initializeTwits: function(){
+    if(this.$el.data('state')){
+      this.twits = new Twits(this.$el.data('state'));
+    }else{
+      this.twits = new Twits([]);
+      this.twits.url = '/twits';
+      this.twits.fetch();
+    }
   },
   initializeSocket: function(){
     this.socket = io.connect();
@@ -33,7 +42,7 @@ module.exports = Backbone.View.extend({
   },
   showPrevTweets: function(){
     var self = this;
-    this.prevTwits = new Twits();
+    this.prevTwits = new Twits([]);
     this.prevTwits.url = '/page';
     this.page = this.page + 1;
     this.prevTwits.fetch({
@@ -46,6 +55,7 @@ module.exports = Backbone.View.extend({
   },
   detached: function(){
     this.socket.removeListener('twit');
+    this.$el.data('state', '');
   },
   render: function(){
     React.renderComponent(<twitsApp collection={this.twits}

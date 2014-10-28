@@ -10,16 +10,24 @@ var Router = Backbone.Router.extend({
       'about': 'about',
       '*path': 'default'
     },
+    changeView: function(View){
+      if(this.currentView){
+          this.currentView.detached();
+      }
+      this.currentView = new View({el: '#content'});
+    },
     default: function(){
+      var self = this;
       require.ensure([], function(){
         var TwitsAppView = require('./views/twits_app');
-        new TwitsAppView({el: '#content'});
+        self.changeView(TwitsAppView);
       });
     },
     about: function(){
+      var self = this;
       require.ensure([], function(){
-        var About = require('./components/about.js');
-        React.renderComponent(<About/>, $('#content')[0]);
+        var AboutView = require('./views/about.js');
+        self.changeView(AboutView);
       });
     }
 });

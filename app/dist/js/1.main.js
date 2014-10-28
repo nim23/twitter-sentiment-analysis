@@ -6,22 +6,31 @@ webpackJsonp([1],{
 	/** @jsx React.DOM */
 	'use strict';
 	var Backbone = __webpack_require__(2);
-	var Twits = __webpack_require__(9);
-	var Twit = __webpack_require__(10);
-	var Notification = __webpack_require__(11);
-	var twitsApp = __webpack_require__(7);
-	var notificationComp = __webpack_require__(8);
+	var Twits = __webpack_require__(7);
+	var Twit = __webpack_require__(8);
+	var Notification = __webpack_require__(9);
+	var twitsApp = __webpack_require__(10);
+	var notificationComp = __webpack_require__(11);
 	var React = __webpack_require__(6);
 
 	module.exports = Backbone.View.extend({
 	  initialize: function(){
-	    this.twits = new Twits(this.$el.data('state'));
+	    this.initializeTwits();
 	    this.notification = new Notification({count: 0});
 	    this.newTwits = [];
 	    this.initializeSocket();
 	    this.page = 0;
 	    this.skip = 0;
 	    this.render();
+	  },
+	  initializeTwits: function(){
+	    if(this.$el.data('state')){
+	      this.twits = new Twits(this.$el.data('state'));
+	    }else{
+	      this.twits = new Twits([]);
+	      this.twits.url = '/twits';
+	      this.twits.fetch();
+	    }
 	  },
 	  initializeSocket: function(){
 	    this.socket = io.connect();
@@ -38,7 +47,7 @@ webpackJsonp([1],{
 	  },
 	  showPrevTweets: function(){
 	    var self = this;
-	    this.prevTwits = new Twits();
+	    this.prevTwits = new Twits([]);
 	    this.prevTwits.url = '/page';
 	    this.page = this.page + 1;
 	    this.prevTwits.fetch({
@@ -51,6 +60,7 @@ webpackJsonp([1],{
 	  },
 	  detached: function(){
 	    this.socket.removeListener('twit');
+	    this.$el.data('state', '');
 	  },
 	  render: function(){
 	    React.renderComponent(twitsApp({collection: this.twits, 
@@ -67,13 +77,47 @@ webpackJsonp([1],{
 /***/ 7:
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	var Backbone = __webpack_require__(2);
+	var Twit = __webpack_require__(8);
+	module.exports = Backbone.Collection.extend({
+	  model: Twit
+	});
+
+
+/***/ },
+
+/***/ 8:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var Backbone = __webpack_require__(2);
+	module.exports = Backbone.Model.extend({});
+
+
+/***/ },
+
+/***/ 9:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var Backbone = __webpack_require__(2);
+	module.exports = Backbone.Model.extend({});
+
+
+/***/ },
+
+/***/ 10:
+/***/ function(module, exports, __webpack_require__) {
+
 	/** @jsx React.DOM */
 	'use strict';
 	var React = __webpack_require__(6);
-	var Twit = __webpack_require__(12);
-	var notification = __webpack_require__(8);
-	var pageLoader = __webpack_require__(13);
-	var BackboneMixin = __webpack_require__(14);
+	var Twit = __webpack_require__(16);
+	var notification = __webpack_require__(11);
+	var navigation = __webpack_require__(17);
+	var pageLoader = __webpack_require__(18);
+	var BackboneMixin = __webpack_require__(19);
 
 	module.exports = React.createClass({displayName: 'exports',
 	  mixins: [BackboneMixin],
@@ -83,7 +127,8 @@ webpackJsonp([1],{
 	    });
 	  },
 	  render: function(){
-	    return (React.DOM.div({className: "twits-app"}, 
+	    return (React.DOM.section({className: "twits-app"}, 
+	              navigation(null), 
 	              notification({model: this.props.notification, 
 	                            onClick: this.props.showNewTweets}), 
 	              this.renderTwits(), 
@@ -95,13 +140,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 8:
+/***/ 11:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 	'use strict';
 	var React = __webpack_require__(6);
-	var BackboneMixin = __webpack_require__(14);
+	var BackboneMixin = __webpack_require__(19);
 
 	module.exports = React.createClass({displayName: 'exports',
 	  mixins: [BackboneMixin],
@@ -134,47 +179,14 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 9:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var Backbone = __webpack_require__(2);
-	var Twit = __webpack_require__(10);
-	module.exports = Backbone.Collection.extend({
-	  model: Twit
-	});
-
-
-/***/ },
-
-/***/ 10:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var Backbone = __webpack_require__(2);
-	module.exports = Backbone.Model.extend({});
-
-
-/***/ },
-
-/***/ 11:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var Backbone = __webpack_require__(2);
-	module.exports = Backbone.Model.extend({});
-
-
-/***/ },
-
-/***/ 12:
+/***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 	'use strict';
 	var React = __webpack_require__(6);
-	var Avatar = __webpack_require__(18);
-	var entities = __webpack_require__(175);
+	var Avatar = __webpack_require__(41);
+	var entities = __webpack_require__(104);
 
 	module.exports = React.createClass({displayName: 'exports',
 	  render: function(){
@@ -190,13 +202,45 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 13:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 	'use strict';
 	var React = __webpack_require__(6);
-	var BackboneMixin = __webpack_require__(14);
+	module.exports = React.createClass({displayName: 'exports',
+	  getInitialState: function(){
+	    return {
+	      pages: [{url: '/', text: 'Home'},
+	              {url: '/about', text: 'About'}]
+	    }
+	  },
+	  renderNavigation: function(){
+	    return this.state.pages.map(function(page, index){
+	            return (React.DOM.a({key: index, href: page.url}, page.text));
+	    });
+	  },
+	  render: function(){
+	    return (
+	      React.DOM.section({className: "navigation-wrapper"}, 
+	        React.DOM.div({className: "navigation"}, 
+	          this.renderNavigation()
+	        )
+	      )
+	    )
+	  }
+	});
+
+
+/***/ },
+
+/***/ 18:
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */
+	'use strict';
+	var React = __webpack_require__(6);
+	var BackboneMixin = __webpack_require__(19);
 
 	module.exports = React.createClass({displayName: 'exports',
 	  onClick: function(){
@@ -212,7 +256,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 14:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -232,7 +276,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 18:
+/***/ 41:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
@@ -250,7 +294,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 175:
+/***/ 104:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
