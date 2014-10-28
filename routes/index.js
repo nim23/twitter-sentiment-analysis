@@ -15,9 +15,17 @@ function renderPage(req, res){
   });
 }
 
+router.get('/page', function(req, res){
+  Twit.getTwits(req.query.page, req.query.skip).then(function(tweets) {
+      res.send(tweets);
+  });
+});
+
 /* Get the index page. */
 router.get('/', function(req, res) {
   renderPage(req, res);
 });
+
+
 
 module.exports = router;

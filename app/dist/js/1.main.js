@@ -9,11 +9,11 @@ webpackJsonp([1],[
 	/** @jsx React.DOM */
 	'use strict';
 	var Backbone = __webpack_require__(2);
-	var Twits = __webpack_require__(10);
-	var Twit = __webpack_require__(11);
-	var Notification = __webpack_require__(12);
-	var twitsApp = __webpack_require__(8);
-	var notificationComp = __webpack_require__(9);
+	var Twits = __webpack_require__(9);
+	var Twit = __webpack_require__(10);
+	var Notification = __webpack_require__(11);
+	var twitsApp = __webpack_require__(7);
+	var notificationComp = __webpack_require__(8);
 	var React = __webpack_require__(6);
 
 	module.exports = Backbone.View.extend({
@@ -22,6 +22,8 @@ webpackJsonp([1],[
 	    this.notification = new Notification({count: 0});
 	    this.newTwits = [];
 	    this.initializeSocket();
+	    this.page = 0;
+	    this.skip = 0;
 	    this.render();
 	  },
 	  initializeSocket: function(){
@@ -29,6 +31,7 @@ webpackJsonp([1],[
 	    this.socket.on('twit', function(data){
 	      var count = this.notification.get('count') + 1;
 	      this.notification.set({count: count});
+	      this.skip = this.skip + 1;
 	      this.newTwits.unshift(new Twit(data));
 	    }.bind(this));
 	  },
@@ -36,13 +39,27 @@ webpackJsonp([1],[
 	    this.twits.add(this.newTwits,{at: 0});
 	    this.notification.set({count: 0});
 	  },
+	  showPrevTweets: function(){
+	    var self = this;
+	    this.prevTwits = new Twits();
+	    this.prevTwits.url = '/page';
+	    this.page = this.page + 1;
+	    this.prevTwits.fetch({
+	      traditional: true,
+	      data:{page: this.page, skip: this.skip},
+	      success: function(resp){
+	        self.twits.add(resp.models, {at: self.twits.length});
+	      }
+	    });
+	  },
 	  detached: function(){
 	    this.socket.removeListener('twit');
 	  },
 	  render: function(){
 	    React.renderComponent(twitsApp({collection: this.twits, 
 	                                    notification: this.notification, 
-	                                    showNewTweets: this.showNewTweets.bind(this)}),
+	                                    showNewTweets: this.showNewTweets.bind(this), 
+	                                    showPrevTweets: this.showPrevTweets.bind(this)}),
 	                          this.el);
 	  }
 	});
@@ -51,16 +68,16 @@ webpackJsonp([1],[
 /***/ },
 /* 5 */,
 /* 6 */,
-/* 7 */,
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 	'use strict';
 	var React = __webpack_require__(6);
-	var Twit = __webpack_require__(15);
-	var notification = __webpack_require__(9);
-	var BackboneMixin = __webpack_require__(16);
+	var Twit = __webpack_require__(12);
+	var notification = __webpack_require__(8);
+	var pageLoader = __webpack_require__(13);
+	var BackboneMixin = __webpack_require__(14);
 
 	module.exports = React.createClass({displayName: 'exports',
 	  mixins: [BackboneMixin],
@@ -73,20 +90,21 @@ webpackJsonp([1],[
 	    return (React.DOM.div({className: "twits-app"}, 
 	              notification({model: this.props.notification, 
 	                            onClick: this.props.showNewTweets}), 
-	              this.renderTwits()
+	              this.renderTwits(), 
+	              pageLoader({onClick: this.props.showPrevTweets})
 	            ));
 	  }
 	});
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
 	'use strict';
 	var React = __webpack_require__(6);
-	var BackboneMixin = __webpack_require__(16);
+	var BackboneMixin = __webpack_require__(14);
 
 	module.exports = React.createClass({displayName: 'exports',
 	  mixins: [BackboneMixin],
@@ -118,15 +136,24 @@ webpackJsonp([1],[
 
 
 /***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var Backbone = __webpack_require__(2);
+	var Twit = __webpack_require__(10);
+	module.exports = Backbone.Collection.extend({
+	  model: Twit
+	});
+
+
+/***/ },
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var Backbone = __webpack_require__(2);
-	var Twit = __webpack_require__(11);
-	module.exports = Backbone.Collection.extend({
-	  model: Twit
-	});
+	module.exports = Backbone.Model.extend({});
 
 
 /***/ },
@@ -142,21 +169,10 @@ webpackJsonp([1],[
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	var Backbone = __webpack_require__(2);
-	module.exports = Backbone.Model.extend({});
-
-
-/***/ },
-/* 13 */,
-/* 14 */,
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/** @jsx React.DOM */
 	'use strict';
 	var React = __webpack_require__(6);
-	var Avatar = __webpack_require__(17);
+	var Avatar = __webpack_require__(18);
 
 	module.exports = React.createClass({displayName: 'exports',
 	  render: function(){
@@ -171,7 +187,28 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 16 */
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */
+	'use strict';
+	var React = __webpack_require__(6);
+	var BackboneMixin = __webpack_require__(14);
+
+	module.exports = React.createClass({displayName: 'exports',
+	  onClick: function(){
+	    this.props.onClick();
+	  },
+	  render: function(){
+	    return (React.DOM.a({className: "load-page", href: "javascript:;", onClick: this.onClick}, 
+	              'Load old tweets.'
+	            ));
+	  }
+	});
+
+
+/***/ },
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -190,7 +227,10 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 17 */
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */
