@@ -3,6 +3,9 @@
 var React = require('react');
 var navigation = require('./navigation');
 
+/*
+About component which basically renders the about page.
+*/
 module.exports = React.createClass({
   render: function(){
     return (<section className='about'>

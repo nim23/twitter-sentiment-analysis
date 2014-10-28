@@ -2,7 +2,13 @@
 'use strict';
 var React = require('react');
 var BackboneMixin = require('../mixins/backbone_mixin');
-
+/*
+Notification React Component only visible when the notification
+count is more than one. Re-renders itself based on the notification
+model passed in from the twits_app view. When clicked calls the callback
+form twits_app view which adds new data to the twits collection and
+caused the twits_app component to re-render.
+*/
 module.exports = React.createClass({
   mixins: [BackboneMixin],
   getNotificationText: function(notification){

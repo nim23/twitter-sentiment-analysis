@@ -2,6 +2,11 @@
 var Twit = require('../models/Twit');
 var getSentiment = require('./get_sentiment');
 
+/*
+Listen to stream data from twitter gets the sentiment value for the
+twit and saves it to the database. Once saved into the database
+fires a socket io event with the newly created twit as the payload.
+*/
 module.exports = function(stream, io){
   stream.on('data', function(data){
 
@@ -18,8 +23,6 @@ module.exports = function(stream, io){
         profile_image_url: data.user.profile_image_url,
         user_name: data.user.screen_name
       });
-
-      // console.log(twit);
 
        twit.save(function(err){
          if(!err){

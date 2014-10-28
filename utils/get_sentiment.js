@@ -1,4 +1,9 @@
 'use strict';
+/*
+Given a specified a text this module passes the text to sentiment
+analysis api returns it users to whoever is called the promise based
+exported function.
+*/
 var unirest = require('unirest');
 var Q = require('q');
 var config = require('../config');
@@ -12,7 +17,6 @@ module.exports = function(text){
 
   unirest.get(genEndpointUrl(text))
   .end(function (result) {
-    // console.log(result.body);
     deferred.resolve(result.body);
   });
 

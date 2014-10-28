@@ -1,6 +1,9 @@
 /** @jsx React.DOM */
 'use strict';
 var React = require('react');
+/*
+Navigation Component with pre-defined set of routes
+*/
 module.exports = React.createClass({
   getInitialState: function(){
     return {

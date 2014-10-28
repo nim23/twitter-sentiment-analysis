@@ -4,6 +4,9 @@ var React = require('react');
 var Avatar = require('./avatar');
 var entities = require('htmlentities');
 
+/*
+React component responsible for displaying twit.
+*/
 module.exports = React.createClass({
   render: function(){
     return (

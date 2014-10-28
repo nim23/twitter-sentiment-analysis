@@ -19,6 +19,10 @@ gulp.task('css', function(){
     .pipe(gulp.dest('./app/dist/stylesheets/'));
 });
 
+/*
+From command line run gulp to run prod tasks.
+Generates minified files for deployment.
+*/
 gulp.task('default', ['css', 'webpack']);
 
 gulp.task('webpack-dev', function() {
@@ -27,4 +31,9 @@ gulp.task('webpack-dev', function() {
     .pipe(gulp.dest(path.join(DEST_FOLDER, 'js')));
 });
 
+/*
+From command line run gulp dev to run the dev tasks.
+Runs a watch command for any changes in the client side Javascript and
+compiles the files together.
+*/
 gulp.task('dev', ['webpack-dev']);
