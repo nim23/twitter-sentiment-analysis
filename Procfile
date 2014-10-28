@@ -1,1 +1,1 @@
-web: export NODE_ENV=production && gulp && node server.js
+web: export NODE_ENV=production && node server.js
