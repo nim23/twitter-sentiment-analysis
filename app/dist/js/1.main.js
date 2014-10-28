@@ -193,7 +193,15 @@ webpackJsonp([1],{
 	    return (
 	        React.DOM.div({className: 'twit ' + (this.props.twit.sentiment || 'positive')}, 
 	          Avatar({imgUrl: this.props.twit.profile_image_url}), 
-	          React.DOM.span({className: "twit-text"}, entities.decode(this.props.twit.text))
+	            React.DOM.div({className: "twit-content"}, 
+	              React.DOM.div({className: "twit-by"}, 
+	                React.DOM.a({target: "_blank", href: 'http://www.twitter.com/' + this.props.twit.user_name}, this.props.twit.twit_by), 
+	                React.DOM.span({className: "user-name"}, " @", this.props.twit.user_name)
+	              ), 
+	              React.DOM.div({className: "twit-text"}, 
+	                entities.decode(this.props.twit.text)
+	              )
+	            )
 	        )
 	    );
 	  }

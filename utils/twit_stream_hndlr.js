@@ -13,7 +13,7 @@ module.exports = function(stream, io){
         id: data.id,
         text: data.text,
         sentiment: sentimentAnalysis.sentiment,
-        tweet_by: data.user.name,
+        twit_by: data.user.name,
         date: data.created_at,
         profile_image_url: data.user.profile_image_url,
         user_name: data.user.screen_name
