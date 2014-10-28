@@ -200,8 +200,8 @@ webpackJsonp([1],[
 	    this.props.onClick();
 	  },
 	  render: function(){
-	    return (React.DOM.a({className: "load-page", href: "javascript:;", onClick: this.onClick}, 
-	              'Load old tweets.'
+	    return (React.DOM.a({className: "page-loader", href: "javascript:;", onClick: this.onClick}, 
+	              'Load old tweets'
 	            ));
 	  }
 	});

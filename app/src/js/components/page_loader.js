@@ -8,8 +8,8 @@ module.exports = React.createClass({
     this.props.onClick();
   },
   render: function(){
-    return (<a className='load-page' href='javascript:;' onClick={this.onClick}>
-              {'Load old tweets.'}
+    return (<a className='page-loader' href='javascript:;' onClick={this.onClick}>
+              {'Load old tweets'}
             </a>);
   }
 });
