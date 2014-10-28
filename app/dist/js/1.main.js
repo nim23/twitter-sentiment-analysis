@@ -223,6 +223,7 @@ webpackJsonp([1],{
 	  render: function(){
 	    return (
 	      React.DOM.section({className: "navigation-wrapper"}, 
+	        React.DOM.h2(null, 'Twitter Sentiment Analysis'), 
 	        React.DOM.div({className: "navigation"}, 
 	          this.renderNavigation()
 	        )

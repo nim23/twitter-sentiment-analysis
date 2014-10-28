@@ -16,6 +16,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <section className='navigation-wrapper'>
+        <h2>{'Twitter Sentiment Analysis'}</h2>
         <div className='navigation'>
           {this.renderNavigation()}
         </div>
