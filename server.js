@@ -6,12 +6,28 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var mongoOptions = {
+		db: {safe: true},
+		server: {
+			auto_reconnect: true,
+			socketOptions: {keepAlive: 1}
+		}
+};
 
 var routes = require('./routes/index');
 
 var app = express();
 
-mongoose.connect("mongodb://localhost:27017/sentiment-analysis");
+if ('production' !== process.env.NODE_ENV){
+  mongoose.connect('mongodb://localhost:27017/sentiment-analysis');
+}else{
+  mongoose.connect('mongodb://fitppl-deploy.cloudapp.net:27017/sentiment-analysis',
+                    mongoOptions,
+                    function onMongooseError(err){
+		                     if(err) {throw err;}
+	                 });
+}
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
