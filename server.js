@@ -23,16 +23,22 @@ var routes = require('./routes/index');
 
 var app = express();
 
+/*
+Uncomment if else if mongodb is running on localhost otherwise
+connect to one currently deployed on AWS for this project.
+
 if ('production' !== process.env.NODE_ENV){
   mongoose.connect('mongodb://localhost:27017/sentiment-analysis');
 }else{
+*/
   mongoose.connect('mongodb://fitppl-deploy.cloudapp.net:27017/sentiment-analysis',
                     mongoOptions,
                     function onMongooseError(err){
-		                     if(err) {throw err;}
-	                 });
+                      if(err) {throw err;}
+                  });
+/*
 }
-
+*/
 
 /*
 view engine setup
