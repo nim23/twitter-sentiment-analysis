@@ -1,0 +1,112 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+  background-color: #DAEAEF;
+}
+
+#content{
+  width: 96%;
+  margin: 1em auto;
+}
+
+@media (min-width: 680px){
+  #content{
+    width: 80%;
+  }
+}
+
+@media (min-width: 1024px){
+  #content{
+    width: 60%;
+  }
+}
+
+.twit,.about-content{
+  margin: 0 0;
+  position: relative;
+  min-height: 5.15em;
+  background-color: #fff;
+  padding: 1em;
+  border: 1px solid #eaeaea;
+  border-top: none;
+}
+
+.twit.positive{
+  background-color: #fff;
+}
+
+.twit.negative{
+  background-color: #F2766B;
+  color: #fff;
+  border: 1px solid #DB5656;
+  border-top: none;
+}
+
+.positive + .negative{
+  border-top: 1px solid #DB5656;
+}
+
+.twit .twit-content{
+  float: left;
+  margin: 0 0 0 3.5em;
+}
+
+.twit:after{
+  content: '.';
+  visibility: hidden;
+  height: 0;
+  display: block;
+  clear: both;
+}
+
+.twit .avatar{
+  position: absolute;
+  left: 1em;
+  top: 1e;
+}
+
+.notification, .page-loader{
+  text-align: center;
+  background-color: #fff;
+  min-height: 2em;
+  vertical-align: middle;
+  padding-top: 0.25em;
+  border: 1px solid #eaeaea;
+  display: block;
+}
+
+.notification a, .navigation a, .page-loader, .twit-by a{
+  color: #595859;
+}
+
+.twit.negative .twit-by a{
+  color: #712D09;
+}
+
+.page-loader{
+  border-top: none;
+}
+
+.navigation-wrapper{
+  margin: 0 0 1em 0;
+  color:
+}
+
+.navigation-wrapper:after{
+  content: '.';
+  visibility: hidden;
+  height: 0;
+  display: block;
+  clear: both;
+}
+
+.navigation{
+  float : right;
+}
+
+.navigation a{
+  margin: 0 0 0 1em;
+}
